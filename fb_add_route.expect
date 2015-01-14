@@ -1,0 +1,15 @@
+#!/usr/bin/env expect
+
+# XXX This is a bad idea since the password will probably be visible
+# XXX in process listings.
+set pass [lindex $argv 0];
+set net [lindex $argv 1];
+
+spawn -noecho telnet 192.168.178.1
+expect "password: "
+send "$pass\n"
+expect "# "
+# Replace with correct link local address
+send "route -A inet6 add ${net}::/64 gw fe80::1 dev lan\n"
+expect "# "
+send_user "\n"

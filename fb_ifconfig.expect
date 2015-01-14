@@ -1,0 +1,13 @@
+#!/usr/local/bin/expect
+
+# XXX This is a bad idea since the password will probably be visible
+# XXX in process listings.
+set pass [lindex $argv 0];
+
+spawn -noecho telnet 192.168.178.1
+expect "password: "
+send "$pass\n"
+expect "# "
+send "ifconfig\n"
+expect "# "
+send_user "\n"
